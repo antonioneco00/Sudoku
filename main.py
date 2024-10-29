@@ -22,7 +22,7 @@ def generate_sudoku():
     board = [[nums[pattern(r, c)] for c in cols] for r in rows]
     return board
 
-def remove_numbers(board, clues=60):
+def remove_numbers(board, clues):
     cells = [(r, c) for r in range(9) for c in range(9)]
     random.shuffle(cells)
     for i in range(81 - clues):
@@ -32,7 +32,7 @@ def remove_numbers(board, clues=60):
 
 def check_and_update_number(r, c, button, entry_var, solution):
     global errors
-    def on_focus_out(event):
+    def on_enter(event):
         global errors  # Marcar errors como global
         new_value = entry_var.get()
         if new_value.isdigit() and 1 <= int(new_value) <= 9:
@@ -49,7 +49,7 @@ def check_and_update_number(r, c, button, entry_var, solution):
 
     entry = tk.Entry(root, textvariable=entry_var, font=("Arial", 16), width=2, justify="center")
     entry.grid(row=r, column=c)
-    entry.bind("<FocusOut>", on_focus_out)
+    entry.bind("<Return>", on_enter)  # Validar cuando se presiona Enter
     entry.focus_set()
 
 def check_completion():
@@ -67,7 +67,7 @@ def end_game(success):
     restart = messagebox.askyesno("Reiniciar", "¿Quieres jugar de nuevo?")
     if restart:
         root.destroy()
-        start_game()
+        show_difficulty_window()
     else:
         root.destroy()
 
@@ -120,13 +120,40 @@ def update_time():
     time_label.config(text=f"Tiempo: {elapsed_time}s")
     root.after(1000, update_time)
 
-def start_game():
+def start_game(clues):
     global start_time
     start_time = time.time()
     
     sudoku_solution = generate_sudoku()
-    sudoku_board_with_blanks = remove_numbers([row[:] for row in sudoku_solution], clues=60)
+    sudoku_board_with_blanks = remove_numbers([row[:] for row in sudoku_solution], clues)
     pprint(sudoku_board_with_blanks)
     create_sudoku_board_gui(sudoku_board_with_blanks, sudoku_solution)
 
-start_game()
+def set_difficulty(difficulty):
+    difficulty_window.destroy()
+    clues = 60 if difficulty == "fácil" else 50 if difficulty == "media" else 40
+    start_game(clues)
+
+def show_difficulty_window():
+    global difficulty_window
+    difficulty_window = tk.Tk()
+    difficulty_window.title("Seleccionar Dificultad")
+
+    label = tk.Label(difficulty_window, text="Selecciona la dificultad:", font=("Arial", 14))
+    label.pack(pady=10)
+
+    btn_easy = tk.Button(difficulty_window, text="Fácil (60 clues)", font=("Arial", 12), width=20,
+                         command=lambda: set_difficulty("fácil"))
+    btn_easy.pack(pady=5)
+
+    btn_medium = tk.Button(difficulty_window, text="Media (50 clues)", font=("Arial", 12), width=20,
+                           command=lambda: set_difficulty("media"))
+    btn_medium.pack(pady=5)
+
+    btn_hard = tk.Button(difficulty_window, text="Difícil (40 clues)", font=("Arial", 12), width=20,
+                         command=lambda: set_difficulty("difícil"))
+    btn_hard.pack(pady=5)
+
+    difficulty_window.mainloop()
+
+show_difficulty_window()
