@@ -48,7 +48,7 @@ Este es un proyecto de Sudoku desarrollado en Python con una interfaz gráfica b
 ![Menú de Selección](media/dificultad.png)
 
 ### Tablero de Sudoku
-![Tablero de Juego](media/partida.png)
+![Tablero de Juego](media/preview.png)
 
 ## Contribución
 
