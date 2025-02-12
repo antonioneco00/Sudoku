@@ -1,0 +1,13 @@
+en:
+  title: Sudoku Game
+  description: >
+    This is a Sudoku game developed in Python using Tkinter. It features three difficulty levels, error tracking, a timer, and real-time number validation. 
+    Players can select a difficulty level at the start, input numbers by clicking on empty cells and pressing Enter, and aim to solve the puzzle with a maximum of three mistakes. If all numbers are correctly placed, a victory message appears.
+    The game ensures a valid Sudoku board, and incorrect numbers are highlighted in red, while correct ones turn blue and become unmodifiable.  
+
+es:
+  title: Juego de Sudoku
+  description: >
+    Este es un juego de Sudoku desarrollado en Python utilizando Tkinter. Cuenta con tres niveles de dificultad, seguimiento de errores, un temporizador y validación en tiempo real. 
+    Los jugadores pueden seleccionar un nivel de dificultad al inicio, ingresar números haciendo clic en celdas vacías y presionando Enter, y resolver el Sudoku con un máximo de tres errores. Si todos los números están correctamente colocados, aparece un mensaje de victoria. 
+    El juego garantiza un tablero de Sudoku válido y resalta los números incorrectos en rojo, mientras que los correctos se vuelven azules y no pueden ser modificados.  
